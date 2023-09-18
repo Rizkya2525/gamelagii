@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-image: url('https://asset-2.tstatic.net/jabar/foto/bank/images/Ilustrasi-perayaan-HUT-RI-ke-78-17-Agustus-2023.jpg');
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    background-color: #990012;
+    color: white;
+    padding: 20px;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .answer {
+    display: block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .answer:hover {
+    background-color: #2980b9;
+  }
+  #score {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .congratulations {
+    display: none;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+</style>
+<title>Cerdas Cermat Kemerdekaan</title>
+</head>
+<body>
+<header>
+  <h1>Cerdas Cermat Kemerdekaan</h1>
+</header>
+<div class="container">
+  <h2 id="questionText">Pertanyaan:</h2>
+  <p id="question">Apa ibukota Indonesia?</p>
+  <div class="answer">Jakarta</div>
+  <div class="answer">Surabaya</div>
+  <div class="answer">Bandung</div>
+  <div class="answer">Medan</div>
+  <div id="score">Skor: 0</div>
+  <div class="congratulations" id="congratsMessage">Selamat! Anda Telah Menyelesaikan Kuis Ini!</div>
+</div>
+<script>
+  const questions = [
+    { question: 'Apa ibukota Indonesia?', choices: ['Jakarta', 'Surabaya', 'Bandung', 'Medan'], correctAnswer: 'Jakarta' },
+    { question: 'Siapakah presiden pertama Indonesia?', choices: ['Soekarno', 'Hatta', 'Suharto', 'Jokowi'], correctAnswer: 'Soekarno' },
+    { question: 'pada tahun berapa Indonesia merdeka?', choices: ['1936', '1945', '1900', '1976'], correctAnswer: '1945' },
+    { question: 'pada bulan berapa Indonesia merdeka?', choices: ['Januari', 'Desember', 'Agustus', 'Maret'], correctAnswer: 'Agustus' },
+    { question: 'Ada berapa provinsi di Indonesia?', choices: ['38', '34', '32', '30'], correctAnswer: '38' },
+    { question: 'Siapakah yang menciptakan lagu Indonesia Raya?', choices: ['Moh.Hatta', 'W.R. Supratman', 'Bandung', 'Medan'], correctAnswer: 'W.R. Supratman' },
+    { question: 'Tanggal 10 november diperingati sebagai hari?', choices: ['Pahlawan', 'kartini', 'sumpah pemuda', 'pancasila'], correctAnswer: 'Pahlawan' },
+    { question: 'Berapa lama belanda menjajah Indonesia?', choices: ['150 tahun', '100 tahun', '350 tahun', '500 tahun'], correctAnswer: '350 tahun' }
+    // Tambahkan lebih banyak pertanyaan di sini
+  ];
+
+  const questionText = document.getElementById('questionText');
+  const question = document.getElementById('question');
+  const answers = document.querySelectorAll('.answer');
+  const scoreDisplay = document.getElementById('score');
+  let currentQuestionIndex = 0;
+  let score = 0;
+
+  function loadQuestion(index) {
+    questionText.textContent = `Pertanyaan ${index + 1}:`;
+    question.textContent = questions[index].question;
+
+    answers.forEach((answer, idx) => {
+      answer.textContent = questions[index].choices[idx];
+      answer.style.backgroundColor = '#3498db';
+      answer.style.pointerEvents = 'auto';
+    });
+  }
+
+  answers.forEach(answer => {
+    answer.addEventListener('click', () => {
+      if (answer.textContent === questions[currentQuestionIndex].correctAnswer) {
+        answer.style.backgroundColor = 'green';
+        score++;
+        scoreDisplay.textContent = `Skor: ${score}`;
+      } else {
+        answer.style.backgroundColor = 'red';
+      }
+      answers.forEach(a => a.style.pointerEvents = 'none');
+
+      setTimeout(() => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+          loadQuestion(currentQuestionIndex);
+        }else {
+          // Tampilkan pesan selamat jika semua pertanyaan sudah dijawab
+          const congratsMessage = document.getElementById('congratsMessage');
+          congratsMessage.style.display = 'block';
+        }
+      }, 1000);
+    });
+  });
+
+
+  loadQuestion(currentQuestionIndex);
+</script>
+</body>
+</html>
